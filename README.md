@@ -1,4 +1,11 @@
+micro_core_store
+-----
+
+Badges
+----
+
 This package is a simple approach to manage the state of the app with Streams and State Pattern.
+----
 
 ## Features
 
@@ -11,3 +18,6 @@ This package is a simple approach to manage the state of the app with Streams an
 ```dart
 // Tópic Implementation
 ```
+
+/// 1. Readme
+/// 2. Badges

@@ -12,4 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-void main() {}
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:micro_core_store/src/micro_core_store.dart';
+
+void main() {
+  group('exports |', () {
+    test(
+      'Should be able to access Store when importing lib/src/micro_core_store.dart',
+      () {
+        // Arrange
+        // Act
+        final store = Store<int>(0);
+
+        // Assert
+        expect(store.state, equals(0));
+      },
+    );
+
+    testWidgets(
+      'Should be able to access StoreBuilder when importing lib/src/micro_core_store.dart',
+      (tester) async {
+        // Arrange
+        final store = Store<String>('Initial State');
+
+        // Act
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: StoreBuilder<Store<String>, String>(
+                store: store,
+                builder: (context, state) {
+                  return Text(state);
+                },
+              ),
+            ),
+          ),
+        );
+
+        // Assert
+        expect(find.text('Initial State'), findsOneWidget);
+      },
+    );
+  });
+}

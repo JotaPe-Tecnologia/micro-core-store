@@ -14,8 +14,10 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+
 /// Class that will handle the screen's changes of [State].
-abstract base class Store<State> {
+base class Store<State> {
   /// Atribute that has the actual [State].
   late State _state;
 
@@ -81,7 +83,17 @@ abstract base class Store<State> {
   StreamSubscription<State>? _listener;
 
   /// Getter to know if the [stream] has a [StreamSubscription].
-  bool get _hasListener => _listener != null;
+  @visibleForTesting
+  bool get hasListener => _listener != null;
+
+  /// Getter to know if the [_streamController] is closed.
+  @visibleForTesting
+  bool get isClosed => _streamController.isClosed;
+
+  /// Getter to know if the [_listener] of the [_streamController] is active and
+  /// listening new events.
+  @visibleForTesting
+  bool get isListening => (hasListener && !_listener!.isPaused);
 
   /// Method that adds a [StreamSubscription] to the [stream].
   void addListener(void Function(State state) onState) {
@@ -91,16 +103,19 @@ abstract base class Store<State> {
 
   /// Method that pauses the [_listener] of the [stream] if isn't paused.
   void pauseListener() {
-    if (_hasListener && !_listener!.isPaused) _listener!.pause();
+    if (isListening) _listener!.pause();
   }
 
   /// Method that resumes the [_listener] of the [stream] if is paused.
   void resumeListener() {
-    if (_hasListener && _listener!.isPaused) _listener!.resume();
+    if (hasListener && _listener!.isPaused) _listener!.resume();
   }
 
   /// Method that cancel the [_listener] of the [stream].
   void removeListener() {
-    if (_hasListener) _listener!.cancel();
+    if (hasListener) {
+      _listener!.cancel();
+      _listener = null;
+    }
   }
 }
