@@ -51,7 +51,6 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: "Validating Code Coverage"
-        if: ${{ "$(dart run test_cov_console --pass=100)" == "PASSED" }}
         run: |
           git config user.name "JotaPe Tecnologia Workflow"
           git config user.email contato@jotapetecnologia.com.br
