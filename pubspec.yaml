@@ -2,6 +2,8 @@ name: micro_core_store
 description: This package is a simple approach to manage the state of the app with Streams and State Pattern.
 version: 0.1.0
 homepage: https://www.jotapetecnologia.com.br/flutter/packages/micro-core-store
+repository: https://github.com/JotaPe-Tecnologia/micro-core-store
+issue_tracker: https://github.com/JotaPe-Tecnologia/micro-core-store/issues
 
 environment:
   sdk: '>=3.1.3 <4.0.0'
