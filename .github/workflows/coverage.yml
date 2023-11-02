@@ -56,3 +56,5 @@ jobs:
           git config user.email contato@jotapetecnologia.com.br
           git tag "v"$(cut -c10- <<< "$(grep 'version:' pubspec.yaml)")""
           git push origin "v"$(cut -c10- <<< "$(grep 'version:' pubspec.yaml)")""
+          git fetch --tags origin
+          gh release create "v"$(cut -c10- <<< "$(grep 'version:' pubspec.yaml)")"" --verify-tag

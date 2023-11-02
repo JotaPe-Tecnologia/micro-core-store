@@ -169,6 +169,5 @@ class _ListNamesPageState extends State<ListNamesPage> {
 ```
 
 /// 1. Readme
-// 1. Workflow - Creating Tags
 // 2. Workflow - Creating Releases
 // 3. Workflow - Publishing new version
