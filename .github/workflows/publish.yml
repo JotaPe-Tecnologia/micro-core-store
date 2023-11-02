@@ -1,10 +1,69 @@
 name: Publish - Micro Core Store
 
 on:
+  workflow_dispatch:
   push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+  JAVA_VERSION: "16.x"
+  FLUTTER_VERSION: "3.13.9"
 
 jobs:
-  publish:
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+  production:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Starting Deploy on Production Environment"
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}            
+
+      - name: "Installing Java"
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: "Installing Flutter"
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: "Cleaning Previous Build (flutter clean)"
+        run: flutter clean
+
+      - name: "Removing Previous Coverage Files"
+        run: rm -rf coverage
+
+      - name: "Downloading Libs (flutter pub get)"
+        run: flutter pub get
+
+      - name: "Building Android App (flutter build apk)"
+        run: flutter test --coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: "Validating Code Coverage"
+        run: |
+          git config user.name "JotaPe Tecnologia Workflow"
+          git config user.email contato@jotapetecnologia.com.br
+          git tag "v"$(cut -c10- <<< "$(grep 'version:' pubspec.yaml)")""
+          git push origin "v"$(cut -c10- <<< "$(grep 'version:' pubspec.yaml)")""
+          git fetch --tags origin
+          gh release create "v"$(cut -c10- <<< "$(grep 'version:' pubspec.yaml)")"" --verify-tag
+
+      - name: "Publishing Package"
+        uses: k-paxian/dart-package-publisher@1.6
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          format: true
+          flutter: true
+          skipTests: true
