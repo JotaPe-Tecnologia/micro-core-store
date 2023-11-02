@@ -1,6 +1,6 @@
 name: micro_core_store
 description: This package is a simple approach to manage the state of the app with Streams and State Pattern.
-version: 0.0.8
+version: 0.1.0
 homepage: https://www.jotapetecnologia.com.br/flutter/packages/micro-core-store
 
 environment:
@@ -15,7 +15,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  test_cov_console: ^0.2.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
