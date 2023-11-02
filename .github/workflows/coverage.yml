@@ -11,6 +11,7 @@ on:
     branches: [main]
 
 env:
+  GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
   JAVA_VERSION: "16.x"
   FLUTTER_VERSION: "3.13.9"
 
