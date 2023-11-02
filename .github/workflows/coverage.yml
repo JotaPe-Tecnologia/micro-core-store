@@ -15,12 +15,12 @@ env:
 jobs:
   production:
     if: github.ref == 'refs/heads/main'
-    permissions:
-      id-token: write
     runs-on: ubuntu-22.04
     steps:
       - name: "Starting Deploy on Production Environment"
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}            
 
       - name: "Installing Java"
         uses: actions/setup-java@v3
@@ -58,6 +58,3 @@ jobs:
           git push origin "v"$(cut -c10- <<< "$(grep 'version:' pubspec.yaml)")""
           git fetch --tags origin
           gh release create "v"$(cut -c10- <<< "$(grep 'version:' pubspec.yaml)")"" --verify-tag
-      
-      - name: "Publishing New Package Version"
-        uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
