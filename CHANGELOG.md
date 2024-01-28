@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Updating documentation.
+
 ## 0.1.0
 
 * A simple approach to manage state.

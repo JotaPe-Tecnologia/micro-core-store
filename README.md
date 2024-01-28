@@ -6,7 +6,7 @@ micro_core_store
 ![Coverage](https://img.shields.io/codecov/c/github/JotaPe-Tecnologia/micro-core-store?logo=codecov&logoColor=%23F01F7A&label=Coverage&labelColor=%23FFFFFF&color=%23F01F7A)
 ----
 
-This package is a simple approach to manage the state of the app with Streams and State Pattern.
+This package is a simple approach to manage the state of the app with Streams and State Pattern. It's a lot similar to Cubit but the main difference is to add a listener to states on initState method, not in a widget.
 ----
 
 ## Platform Support

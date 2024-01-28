@@ -1,4 +1,4 @@
-// Copyright 2023 JotapeTecnologia
+// Copyright 2024 JotapeTecnologia
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,15 +22,15 @@ class StoreBuilder<T extends Store<State>, State> extends StatelessWidget {
   /// Callback builder that will define what build on the screen depending on the
   /// [State].
   final Widget Function(BuildContext, State) builder;
-  
+
   /// [Store] that will handle the screen's changes of [State].
   final T store;
 
   const StoreBuilder({
-    Key? key,
     required this.builder,
     required this.store,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
